@@ -27,6 +27,8 @@ if __name__ == "__main__":
     RAW_IMAGES_DIR = sys.argv[1]
     ALIGNED_IMAGES_DIR = sys.argv[2]
 
+    os.makedirs(ALIGNED_IMAGES_DIR, exist_ok=True)
+
     landmarks_detector = LandmarksDetector(landmarks_model_path)
     for img_name in os.listdir(RAW_IMAGES_DIR):
         raw_img_path = os.path.join(RAW_IMAGES_DIR, img_name)
