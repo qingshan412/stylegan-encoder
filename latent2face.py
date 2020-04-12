@@ -27,11 +27,12 @@ def move_and_save(latent_vector, direction, coeffs, path):
     [x.axis('off') for x in ax]
     plt.save(path)
 
-# load the pre-trained generator
-URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
+# # load the pre-trained generator
+# URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
 
-tflib.init_tf()
-with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
+# tflib.init_tf()
+# with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
+with open('cache/karras2019stylegan-ffhq-1024x1024.pkl') as f:
     generator_network, discriminator_network, Gs_network = pickle.load(f)
 
 generator = Generator(Gs_network, batch_size=1, randomize_noise=False)
