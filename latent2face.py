@@ -34,12 +34,15 @@ def move_and_save(latent_vector, direction, coeffs, path):
 # with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
 with open('cache/karras2019stylegan-ffhq-1024x1024.pkl') as f:
     generator_network, discriminator_network, Gs_network = pickle.load(f)
+print('model loaded.')
 
 generator = Generator(Gs_network, batch_size=1, randomize_noise=False)
+print('generator ready.')
 
 # Loading already learned representations
 donald_trump = np.load('ffhq_dataset/latent_representations/donald_trump_01.npy')
 hillary_clinton = np.load('ffhq_dataset/latent_representations/hillary_clinton_01.npy')
+print('faces loaded.')
 
 # Of course you can learn your own vectors using two scripts
 
@@ -53,12 +56,16 @@ hillary_clinton = np.load('ffhq_dataset/latent_representations/hillary_clinton_0
 smile_direction = np.load('ffhq_dataset/latent_directions/smile.npy')
 gender_direction = np.load('ffhq_dataset/latent_directions/gender.npy')
 age_direction = np.load('ffhq_dataset/latent_directions/age.npy')
+print('learned representations loaded.')
 
 move_and_show(donald_trump, smile_direction, [-1, 0, 2], 'recs/init/simile_trump.png')
 move_and_show(hillary_clinton, smile_direction, [-1, 0, 1], 'recs/init/simile_hilary.png')
+print('smiling images generated.')
 
 move_and_show(donald_trump, gender_direction, [-2, 0, 2], 'recs/init/gender_trump.png')
 move_and_show(hillary_clinton, gender_direction, [-1.5, 0, 1.], 'recs/init/gender_hilary.png')
+print('gender inverse images generated.')
 
 move_and_show(donald_trump, age_direction, [-2, 0, 2], 'recs/init/age_trump.png')
 move_and_show(hillary_clinton, age_direction, [-2, 0, 2], 'recs/init/age_hilary.png')
+print('aged images generated.')
