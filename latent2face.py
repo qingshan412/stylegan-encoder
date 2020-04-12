@@ -34,7 +34,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
 # tflib.init_tf()
 # with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
 
-with io.BytesIO(open('cache/karras2019stylegan-ffhq-1024x1024.pkl')) as f:
+with io.BytesIO(open('cache/karras2019stylegan-ffhq-1024x1024.pkl', 'rb')) as f:
     generator_network, discriminator_network, Gs_network = pickle.load(f)
 print('model loaded.')
 
