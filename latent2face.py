@@ -26,7 +26,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
         ax[i].imshow(generate_image(new_latent_vector))
         ax[i].set_title('Coeff: %0.1f' % coeff)
     [x.axis('off') for x in ax]
-    plt.save(path)
+    plt.savefig(path)
 
 # # load the pre-trained generator
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
