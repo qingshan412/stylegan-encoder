@@ -6,6 +6,7 @@ import dnnlib
 import dnnlib.tflib as tflib
 import config
 import io
+from dnnlib.util import is_pickleable
 from encoder.generator_model import Generator
 
 import matplotlib.pyplot as plt
@@ -33,6 +34,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
 
 # tflib.init_tf()
 # with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
+print(is_pickleable(open('cache/karras2019stylegan-ffhq-1024x1024.pkl')))
 with io.BytesIO('cache/karras2019stylegan-ffhq-1024x1024.pkl') as f:
     generator_network, discriminator_network, Gs_network = pickle.load(f)
 print('model loaded.')
