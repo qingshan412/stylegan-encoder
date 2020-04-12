@@ -31,7 +31,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
 # # load the pre-trained generator
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
 
-# tflib.init_tf()
+tflib.init_tf()
 # with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
 
 with open('cache/karras2019stylegan-ffhq-1024x1024.pkl', 'rb') as f:
