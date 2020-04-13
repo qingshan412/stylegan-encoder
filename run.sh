@@ -13,4 +13,4 @@ python encode_images.py cache/dist/st_1024 cache/dist/rcs_1024_st_1024 cache/dis
 python encode_images.py cache/dist/st_1024 cache/dist/rcs_256_st_1024_b10 cache/dist/latent_st_1024_b10 --batch_size=10
 # python encode_images.py cache/dist/st_1024 cache/dist/rcs_256_st_1024 cache/dist/latent_st_1024
 # python align_images.py cache/dist/orig cache/dist/st_1024
-# st: set (size), rcs: reconstructed, 
+# st: styletransfer (image size), rcs: reconstructed, 
