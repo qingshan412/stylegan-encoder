@@ -39,11 +39,13 @@ if __name__ == '__main__':
     parser.add_argument("-g", "--use_gpu", help="whether to use gpu or not", action="store_true")
     
     args = parser.parse_args()
+    print('args parsed.')
 
-    directions = ['smile', 'gender', 'age']
-
-    for dire in directions:
+    directions = {'smile': None, 'gender': None, 'age': None}
+    for dire in directions.keys():
         os.makedirs(args.save_dir + os.sep + dire, exist_ok=True)
+        directions[dire] = np.load('ffhq_dataset/latent_directions/' + dire + '.npy')
+    print('learned representations loaded.')
 
     tflib.init_tf()
     # with dnnlib.util.open_url(URL_FFHQ, cache_dir=config.cache_dir) as f:
@@ -60,9 +62,10 @@ if __name__ == '__main__':
     else:
         img_files = os.listdir(args.npy_dir)
         for img_file in img_files:
+            print('processing', img_file, '...')
             img_npy = np.load(args.npy_dir + os.sep + img_file)
-            for dire in directions:
-                move_and_save(img_npy, smile_direction, [-1.5, 0, 2], os.path.join(args.save_dir, dire, img_file)
+            for dire in directions.keys():
+                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], os.path.join(args.save_dir, dire, img_file)
 
     # # # Loading already learned representations
     # # donald_trump = np.load('ffhq_dataset/latent_representations/donald_trump_01.npy')
