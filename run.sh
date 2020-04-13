@@ -9,8 +9,10 @@
 
 module load tensorflow/1.12
 
-python encode_images.py cache/dist/st_1024 cache/dist/rcs_1024_st_1024 cache/dist/latent_st_1024_1024 --image_size=1024
-python encode_images.py cache/dist/st_1024 cache/dist/rcs_256_st_1024_b10 cache/dist/latent_st_1024_b10 --batch_size=10
+python encode_images.py cache/dist/st_1024 cache/dist/rcs_512_st_1024 cache/dist/latent_512_st_1024 --image_size=512
+python encode_images.py cache/dist/st_1024 cache/dist/rcs_128_st_1024 cache/dist/latent_128_st_1024 --image_size=128
+# python encode_images.py cache/dist/st_1024 cache/dist/rcs_1024_st_1024 cache/dist/latent_st_1024_1024 --image_size=1024
+# python encode_images.py cache/dist/st_1024 cache/dist/rcs_256_st_1024_b10 cache/dist/latent_st_1024_b10 --batch_size=10
 # python encode_images.py cache/dist/st_1024 cache/dist/rcs_256_st_1024 cache/dist/latent_st_1024
 # python align_images.py cache/dist/orig cache/dist/st_1024
 # st: styletransfer (image size), rcs: reconstructed, 
