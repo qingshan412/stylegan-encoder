@@ -9,7 +9,9 @@
 
 module load tensorflow/1.12
 
-python latent2face.py
+python encode_images_p.py cache/dist/st_1024 cache/dist/rcs_256_st_1024_p cache/dist/latent_256_st_1024_p
+
+# python latent2face.py
 
 # python encode_images.py cache/dist/st_1024 cache/dist/rcs_112_st_1024 cache/dist/latent_112_st_1024 --image_size=112
 # python encode_images.py cache/dist/st_1024 cache/dist/rcs_512_st_1024 cache/dist/latent_512_st_1024 --image_size=512
