@@ -41,7 +41,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     print('args parsed.')
 
-    directions = {'smile': None, 'gender': None, 'age': None}
+    directions = {'smile': None} #'gender': None, 'age': None
     for dire in directions.keys():
         os.makedirs(args.save_dir + os.sep + dire, exist_ok=True)
         directions[dire] = np.load('ffhq_dataset/latent_directions/' + dire + '.npy')
@@ -65,7 +65,7 @@ if __name__ == '__main__':
             print('processing', npy_file, '...')
             img_npy = np.load(args.npy_dir + os.sep + npy_file)
             for dire in directions.keys():
-                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], 
+                move_and_save(img_npy, directions[dire], [0, 0.5, 1, 1.5, 2], 
                             os.path.join(args.save_dir, dire, os.path.splitext(npy_file)[0] + '.png'))
 
     # # # Loading already learned representations
