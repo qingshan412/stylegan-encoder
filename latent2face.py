@@ -60,12 +60,13 @@ if __name__ == '__main__':
     if 'divi' in args.npy_dir:
         pass 
     else:
-        img_files = os.listdir(args.npy_dir)
-        for img_file in img_files:
-            print('processing', img_file, '...')
-            img_npy = np.load(args.npy_dir + os.sep + img_file)
+        npy_files = os.listdir(args.npy_dir)
+        for npy_file in npy_files:
+            print('processing', npy_file, '...')
+            img_npy = np.load(args.npy_dir + os.sep + npy_file)
             for dire in directions.keys():
-                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], os.path.join(args.save_dir, dire, img_file))
+                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], 
+                            os.path.join(args.save_dir, dire, os.path.splitext(npy_file) + '.png'))
 
     # # # Loading already learned representations
     # # donald_trump = np.load('ffhq_dataset/latent_representations/donald_trump_01.npy')
