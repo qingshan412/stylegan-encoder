@@ -34,7 +34,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='for face transformation')
     parser.add_argument("-n", "--npy_dir", help="where to get embeded numpy", 
-                        default="cache/dist/rcs_256_st_1024", type=str)
+                        default="cache/dist/latent_112_st_1024", type=str)
     parser.add_argument('-s','--save_dir',help='where to save generated images',default="cache/dist/fake_test", type=str)
     
     args = parser.parse_args()
