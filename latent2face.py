@@ -29,6 +29,14 @@ def move_and_save(latent_vector, direction, coeffs, path):
     [x.axis('off') for x in ax]
     plt.savefig(path, bbox_inches='tight', pad_inches=0.0)
 
+def move_and_save_indiv(latent_vector, direction, coeffs, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    # fig,ax = plt.subplots(1, len(coeffs), figsize=(15, 10), dpi=80)
+    for i, coeff in enumerate(coeffs):
+        new_latent_vector = latent_vector.copy()
+        new_latent_vector[:8] = (latent_vector + coeff*direction)[:8]
+        generate_image(new_latent_vector).save(os.path.splitext(path)[0] + '_{:0.1f}'.format(coeff), 'PNG')
+        
 # # load the pre-trained generator
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
 
