@@ -6,6 +6,7 @@ import dnnlib
 import dnnlib.tflib as tflib
 import config
 import io
+import argparse
 from encoder.generator_model import Generator
 
 import matplotlib.pyplot as plt
