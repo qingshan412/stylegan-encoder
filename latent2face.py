@@ -64,7 +64,7 @@ if __name__ == '__main__':
             print('processing', img_file, '...')
             img_npy = np.load(args.npy_dir + os.sep + img_file)
             for dire in directions.keys():
-                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], os.path.join(args.save_dir, dire, img_file)
+                move_and_save(img_npy, directions[dire], [-1.5, 0, 2], os.path.join(args.save_dir, dire, img_file))
 
     # # # Loading already learned representations
     # # donald_trump = np.load('ffhq_dataset/latent_representations/donald_trump_01.npy')
