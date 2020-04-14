@@ -26,7 +26,7 @@ def move_and_save(latent_vector, direction, coeffs, path):
         ax[i].imshow(generate_image(new_latent_vector))
         ax[i].set_title('Coeff: %0.1f' % coeff)
     [x.axis('off') for x in ax]
-    plt.savefig(path)
+    plt.savefig(path, bbox_inches='tight', pad_inches=0.0)
 
 # # load the pre-trained generator
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
@@ -35,8 +35,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='for face transformation')
     parser.add_argument("-n", "--npy_dir", help="where to get embeded numpy", 
                         default="cache/dist/rcs_256_st_1024", type=str)
-    parser.add_argument('-s','--save_dir',help='where to save generated images',default="cache/dist/fake", type=str)
-    parser.add_argument("-g", "--use_gpu", help="whether to use gpu or not", action="store_true")
+    parser.add_argument('-s','--save_dir',help='where to save generated images',default="cache/dist/fake_test", type=str)
     
     args = parser.parse_args()
     print('args parsed.')
