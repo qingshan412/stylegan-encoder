@@ -5,7 +5,7 @@
 #$ -pe smp 16            # Specify parallel environment and legal core size
 #$ -q gpu
 #$ -l gpu_card=1
-#$ -N z_encode_test_gpu         # Specify job name
+#$ -N z_encode_gpu_p         # Specify job name
 
 module load tensorflow/1.12
 
