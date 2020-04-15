@@ -10,7 +10,7 @@ from tqdm import tqdm_notebook
 import matplotlib.pylab as plt
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split
-from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPRegressor
 
 # LATENT_TRAINING_DATA = 'https://drive.google.com/uc?id=1xMM3AFq0r014IIhBLiMCjKJJvbhLUQ9t'
     
@@ -44,47 +44,67 @@ assert(len(X_young_data) == len(y_yaw_young_data))
 print(len(X_data))
 print(len(X_young_data))
 
-from sklearn import linear_model
-reg = linear_model.LinearRegression()
-val_scores = cross_val_score(reg, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
-print('val_scores:', val_scores)
-print(np.mean(val_scores))
-
-reg_young = linear_model.LinearRegression()
-val_young_scores = cross_val_score(reg_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
-print('val_young_scores:', val_young_scores)
-print(np.mean(val_young_scores))
-
-from sklearn.neural_network import MLPRegressor
-mlp = MLPRegressor()
+mlp = MLPRegressor((512,20))
 mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
-print('mlp_val_scores:', mlp_val_scores)
+print('512_20_mlp_val_scores:', mlp_val_scores)
 print(np.mean(mlp_val_scores))
 
-mlp_young = MLPRegressor()
+mlp_young = MLPRegressor((512,20))
 mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
-print('mlp_val_young_scores:', mlp_val_young_scores)
+print('512_20_mlp_val_young_scores:', mlp_val_young_scores)
 print(np.mean(mlp_val_young_scores))
 
-mlp = MLPRegressor((512,))
+mlp = MLPRegressor((512,10))
 mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
-print('512_mlp_val_scores:', mlp_val_scores)
+print('512_10_mlp_val_scores:', mlp_val_scores)
 print(np.mean(mlp_val_scores))
 
-mlp_young = MLPRegressor((512,))
+mlp_young = MLPRegressor((512,10))
 mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
-print('512_mlp_val_young_scores:', mlp_val_young_scores)
+print('512_10_mlp_val_young_scores:', mlp_val_young_scores)
 print(np.mean(mlp_val_young_scores))
 
-mlp = MLPRegressor((512,32))
-mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
-print('512_32_mlp_val_scores:', mlp_val_scores)
-print(np.mean(mlp_val_scores))
+# from sklearn import linear_model
+# reg = linear_model.LinearRegression()
+# val_scores = cross_val_score(reg, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
+# print('val_scores:', val_scores)
+# print(np.mean(val_scores))
 
-mlp_young = MLPRegressor((512,32))
-mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
-print('512_32_mlp_val_young_scores:', mlp_val_young_scores)
-print(np.mean(mlp_val_young_scores))
+# reg_young = linear_model.LinearRegression()
+# val_young_scores = cross_val_score(reg_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
+# print('val_young_scores:', val_young_scores)
+# print(np.mean(val_young_scores))
+
+# from sklearn.neural_network import MLPRegressor
+# mlp = MLPRegressor()
+# mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
+# print('mlp_val_scores:', mlp_val_scores)
+# print(np.mean(mlp_val_scores))
+
+# mlp_young = MLPRegressor()
+# mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
+# print('mlp_val_young_scores:', mlp_val_young_scores)
+# print(np.mean(mlp_val_young_scores))
+
+# mlp = MLPRegressor((512,))
+# mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_mlp_val_scores:', mlp_val_scores)
+# print(np.mean(mlp_val_scores))
+
+# mlp_young = MLPRegressor((512,))
+# mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_mlp_val_young_scores:', mlp_val_young_scores)
+# print(np.mean(mlp_val_young_scores))
+
+# mlp = MLPRegressor((512,32))
+# mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_32_mlp_val_scores:', mlp_val_scores)
+# print(np.mean(mlp_val_scores))
+
+# mlp_young = MLPRegressor((512,32))
+# mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_32_mlp_val_young_scores:', mlp_val_young_scores)
+# print(np.mean(mlp_val_young_scores))
 
 # # So let's find the gender direction in the latent space
 # clf = LogisticRegression(class_weight='balanced').fit(X_data.reshape((-1, 18*512)), y_gender_data)
