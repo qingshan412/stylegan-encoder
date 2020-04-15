@@ -73,7 +73,7 @@ if __name__ == '__main__':
             print('processing', npy_file, '...')
             img_npy = np.load(args.npy_dir + os.sep + npy_file)
             for dire in directions.keys():
-                move_and_save(img_npy, directions[dire], [0, 0.5, 1, 1.5, 2], 
+                move_and_save_indiv(img_npy, directions[dire], [0, 0.5, 1, 1.5, 2], 
                             os.path.join(args.save_dir, dire, os.path.splitext(npy_file)[0] + '.png'))
 
     # # # Loading already learned representations
