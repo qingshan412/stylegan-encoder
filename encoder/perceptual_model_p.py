@@ -113,9 +113,10 @@ class PerceptualModel:
         if self.face_mask:
             import dlib
             self.detector = dlib.get_frontal_face_detector()
-            LANDMARKS_MODEL_URL = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
-            landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
-                                                    LANDMARKS_MODEL_URL, cache_subdir='temp'))
+            # LANDMARKS_MODEL_URL = 'http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2'
+            # landmarks_model_path = unpack_bz2(get_file('shape_predictor_68_face_landmarks.dat.bz2',
+            #                                         LANDMARKS_MODEL_URL, cache_subdir='temp'))
+            landmarks_model_path = 'cache/shape_predictor_68_face_landmarks.dat'
             self.predictor = dlib.shape_predictor(landmarks_model_path)
 
     def add_placeholder(self, var_name):
