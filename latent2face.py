@@ -18,12 +18,12 @@ def generate_image(latent_vector):
     img = PIL.Image.fromarray(img_array, 'RGB')
     return img.resize((256, 256))
 
-def move_and_save(latent_vector, direction, coeffs, path):
+def move_and_save(latent_vector, direction, coeffs, path, depth=8):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     fig,ax = plt.subplots(1, len(coeffs), figsize=(15, 10), dpi=80)
     for i, coeff in enumerate(coeffs):
         new_latent_vector = latent_vector.copy()
-        new_latent_vector[:8] = (latent_vector + coeff*direction)[:8]
+        new_latent_vector[:depth] = (latent_vector + coeff*direction)[:depth]
         ax[i].imshow(generate_image(new_latent_vector))
         ax[i].set_title('Coeff: %0.1f' % coeff)
     [x.axis('off') for x in ax]
@@ -43,8 +43,8 @@ def move_and_save_indiv(latent_vector, direction, coeffs, path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='for face transformation')
     parser.add_argument("-n", "--npy_dir", help="where to get embeded numpy", 
-                        default="cache/dist/latent_112_st_1024", type=str)
-    parser.add_argument('-s','--save_dir',help='where to save generated images',default="cache/dist/fake_test", type=str)
+                        default="data/dist/latent_112_st_1024", type=str)
+    parser.add_argument('-s','--save_dir',help='where to save generated images',default="data/dist/fake_test", type=str)
     
     args = parser.parse_args()
     print('args parsed.')
@@ -73,8 +73,10 @@ if __name__ == '__main__':
             print('processing', npy_file, '...')
             img_npy = np.load(args.npy_dir + os.sep + npy_file)
             for dire in directions.keys():
-                move_and_save_indiv(img_npy, directions[dire], [0, 0.5, 1, 1.5, 2], 
-                            os.path.join(args.save_dir, dire, os.path.splitext(npy_file)[0] + '.png'))
+                move_and_save(img_npy, directions[dire], [-2, -1, -0.5, 0, 0.5, 1, 2], 
+                                os.path.join(args.save_dir, dire, os.path.splitext(npy_file)[0] + '.png'))
+                # move_and_save_indiv(img_npy, directions[dire], [0, 0.5, 1, 1.5, 2], 
+                #             os.path.join(args.save_dir, dire, os.path.splitext(npy_file)[0] + '.png'))
 
     # # # Loading already learned representations
     # # donald_trump = np.load('ffhq_dataset/latent_representations/donald_trump_01.npy')
