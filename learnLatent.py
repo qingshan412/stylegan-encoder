@@ -44,16 +44,6 @@ assert(len(X_young_data) == len(y_yaw_young_data))
 print(len(X_data))
 print(len(X_young_data))
 
-mlp = MLPRegressor((512,20))
-mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
-print('512_20_mlp_val_scores:', mlp_val_scores)
-print(np.mean(mlp_val_scores))
-
-mlp_young = MLPRegressor((512,20))
-mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
-print('512_20_mlp_val_young_scores:', mlp_val_young_scores)
-print(np.mean(mlp_val_young_scores))
-
 mlp = MLPRegressor((512,10))
 mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
 print('512_10_mlp_val_scores:', mlp_val_scores)
@@ -63,6 +53,61 @@ mlp_young = MLPRegressor((512,10))
 mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
 print('512_10_mlp_val_young_scores:', mlp_val_young_scores)
 print(np.mean(mlp_val_young_scores))
+
+import keras
+from keras.models import Sequential, Model
+from keras.layers import Dense, Dropout, Embedding, Flatten, Activation
+from keras.optimizers import SGD
+
+model = Sequential()
+model.add(Dense(32, activation='relu'))
+model.add(Dropout(0.3))
+model.add(Dense(1))
+model.add(Activation('sigmoid'))
+model.compile('adam', 'binary_crossentropy', metrics=['accuracy'])
+
+# works bit better, but in general accuracy is quite similar to the linear model
+model.fit(X_data.reshape((-1, 18*512)), y_gender_data, validation_split=0.2, epochs=5)
+model = Model(model.input, model.layers[-2].output)
+
+# some dark magic is happening here
+embedding_model = Sequential()
+embedding_model.add(Embedding(10, 18*512, input_length=1)) # it's actually just a variable
+# 10 is the input range
+embedding_model.add(Flatten())
+
+nonliner_gender_model = Model(embedding_model.input, model(embedding_model.output))
+nonliner_gender_model.layers[-1].trainable = False # fix non-linear model and train only embeddings
+nonliner_gender_model.compile('sgd', 'mse')
+
+nonliner_gender_model.layers[1].set_weights([X_data[:10].reshape((-1, 18*512))])
+y_data_real = nonliner_gender_model.predict(np.arange(10))
+
+# and here
+nonliner_gender_model.fit(np.arange(10), np.full((10, 1), 20), verbose=0, epochs=500)
+nonliner_gender_model.predict(np.arange(10))
+for v in embedding_model.layers[0].get_weights()[0]:
+    plt.imshow(generate_image(v))
+    plt.show()
+
+# reset latents and try it over but now in another direction 
+nonliner_gender_model.layers[1].set_weights([X_data[:10].reshape((-1, 18*512))])
+
+nonliner_gender_model.fit(np.arange(10), np.full((10, 1), -20), verbose=0, epochs=500)
+
+for v in embedding_model.layers[0].get_weights()[0]:
+    plt.imshow(generate_image(v))
+    plt.show()
+
+# mlp = MLPRegressor((512,20))
+# mlp_val_scores = cross_val_score(mlp, X_data, y_yaw_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_20_mlp_val_scores:', mlp_val_scores)
+# print(np.mean(mlp_val_scores))
+
+# mlp_young = MLPRegressor((512,20))
+# mlp_val_young_scores = cross_val_score(mlp_young, X_young_data, y_yaw_young_data, scoring='neg_mean_squared_error', cv=5)
+# print('512_20_mlp_val_young_scores:', mlp_val_young_scores)
+# print(np.mean(mlp_val_young_scores))
 
 # from sklearn import linear_model
 # reg = linear_model.LinearRegression()
