@@ -60,7 +60,7 @@ if __name__ == '__main__':
     generator = Generator(Gs_network, batch_size=1, randomize_noise=False)
     print('generator ready.')
 
-    names = os.listdir('/data/dist/latent_112_st_1024')
+    names = os.listdir('data/dist/latent_112_st_1024')
     X_data = np.array([np.load(name) for name in names])
 
     names_noonan = [names[i] for i in range(len(names)) if 'noonan' in names[i]]
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     for i in range(len(names_noonan)):
         for j in range(i + 1, len(names_noonan)):
-            sv_path = ('/data/dist/analysis/inter_nn/' + names_noonan[i].split('.')[0] + '_' + 
+            sv_path = ('data/dist/analysis/inter_nn/' + names_noonan[i].split('.')[0] + '_' + 
                 names_noonan[j].split('.')[0] + '.png')
             move_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
