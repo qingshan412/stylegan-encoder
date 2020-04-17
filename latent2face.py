@@ -53,6 +53,14 @@ def move_and_save_nn(left_vector, right_vector, coeffs, path):
 if __name__ == '__main__':
     tflib.init_tf()
 
+    with open('data/latent_training_data.pkl.gz', 'rb') as f:
+        qlatent_data, dlatent_data, labels_data = pickle.load(gzip.GzipFile(fileobj=f))
+    
+    young_faces = []
+    for i in range(len(labels_data)):
+        if labels_data[i]['faceAttributes']['age'] < 15:
+            young_faces.append(dlatent_data[i])
+
     with open('cache/karras2019stylegan-ffhq-1024x1024.pkl', 'rb') as f:
         generator_network, discriminator_network, Gs_network = pickle.load(f)
     print('model loaded.')
@@ -63,15 +71,24 @@ if __name__ == '__main__':
     npy_path = 'data/dist/latent_112_st_1024'
     names = os.listdir(npy_path)
     X_data = np.array([np.load(npy_path + os.sep + name) for name in names])
-
     names_noonan = [names[i] for i in range(len(names)) if 'noonan' in names[i]]
     X_noonan = [X_data[i] for i in range(len(names)) if 'noonan' in names[i]]
 
-    for i in range(len(names_noonan)):
-        for j in range(i + 1, len(names_noonan)):
-            sv_path = ('data/dist/analysis/inter_nn/' + names_noonan[i].split('.')[0] + '_' + 
-                names_noonan[j].split('.')[0] + '.png')
-            move_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
+    ffhq_young_path = 'data/ffhq_young'
+    os.makedirs(ffhq_young_path + '/orig', exist_ok=True)
+    os.makedirs(ffhq_young_path + '/add_nn', exist_ok=True)
+    for i, face in enumerate(young_faces):
+        generate_image(face).save(os.path.join(ffhq_young_path, 'orig', str(i) + '.png'))
+        for j, noonan in enumerate(X_noonan):
+            sv_path = os.path.join(ffhq_young_path, 'add_nn', 
+                'orig' + str(i) + '_' + names_noonan[j].split('.')[0] + '.png')
+            move_and_save_nn(face, noonan, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
+
+    # for i in range(len(names_noonan)):
+    #     for j in range(i + 1, len(names_noonan)):
+    #         sv_path = ('data/dist/analysis/inter_nn/' + names_noonan[i].split('.')[0] + '_' + 
+    #             names_noonan[j].split('.')[0] + '.png')
+    #         move_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
