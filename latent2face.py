@@ -60,8 +60,9 @@ if __name__ == '__main__':
     generator = Generator(Gs_network, batch_size=1, randomize_noise=False)
     print('generator ready.')
 
-    names = os.listdir('data/dist/latent_112_st_1024')
-    X_data = np.array([np.load(name) for name in names])
+    npy_path = 'data/dist/latent_112_st_1024'
+    names = os.listdir(npy_path)
+    X_data = np.array([np.load(npy_path + os.sep + name) for name in names])
 
     names_noonan = [names[i] for i in range(len(names)) if 'noonan' in names[i]]
     X_noonan = [X_data[i] for i in range(len(names)) if 'noonan' in names[i]]
