@@ -8,6 +8,7 @@ import config
 import io
 import gzip
 import argparse
+import random
 from encoder.generator_model import Generator
 
 import matplotlib.pyplot as plt
@@ -48,6 +49,13 @@ def move_and_save_nn(left_vector, right_vector, coeffs, path):
     [x.axis('off') for x in ax]
     plt.savefig(path, bbox_inches='tight', pad_inches=0.0)
 
+def merge_and_save_nn(left_vector, right_vector, coeffs, path):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    for i, coeff in enumerate(coeffs):
+        new_latent_vector = left_vector * (1 - coeff) + right_vector * coeff
+        dot_idx = path.rfind('.')
+        generate_image(new_latent_vector).save(path[:dot_idx] + '_{:0.1f}'.format(coeff) + path[dot_idx:], 'PNG')
+
 # # load the pre-trained generator
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
 
@@ -76,14 +84,25 @@ if __name__ == '__main__':
     X_noonan = [X_data[i] for i in range(len(names)) if 'noonan' in names[i]]
 
     ffhq_young_path = 'data/ffhq_young'
-    os.makedirs(ffhq_young_path + '/orig', exist_ok=True)
-    os.makedirs(ffhq_young_path + '/add_nn', exist_ok=True)
-    for i, face in enumerate(young_faces):
-        generate_image(face).save(os.path.join(ffhq_young_path, 'orig', str(i) + '.png'))
-        for j, noonan in enumerate(X_noonan):
-            sv_path = os.path.join(ffhq_young_path, 'add_nn', 
-                'orig' + str(i) + '_' + names_noonan[j].split('.')[0] + '.png')
-            move_and_save_nn(face, noonan, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
+    os.makedirs(ffhq_young_path + '/add_nn_256', exist_ok=True)
+
+    random.seed(888)
+    random_young_faces = random.sample(young_faces, 50)
+    random_X_noonan = random.sample(X_noonan, 10)
+    for i, face in enumerate(random_young_faces):
+        for j, noonan in enumerate(random_X_noonan):
+            sv_path = os.path.join(ffhq_young_path, 'add_nn_256', 
+                names_noonan[j].split('.')[0] + '_' + 'ffhq' + str(i) + '.png')
+            merge_and_save_nn(face, noonan, [0.6, 0.7, 0.8], sv_path)
+
+    # os.makedirs(ffhq_young_path + '/orig', exist_ok=True)
+    # os.makedirs(ffhq_young_path + '/add_nn', exist_ok=True)
+    # for i, face in enumerate(young_faces):
+    #     generate_image(face).save(os.path.join(ffhq_young_path, 'orig', str(i) + '.png'))
+    #     for j, noonan in enumerate(X_noonan):
+    #         sv_path = os.path.join(ffhq_young_path, 'add_nn', 
+    #             'orig' + str(i) + '_' + names_noonan[j].split('.')[0] + '.png')
+    #         move_and_save_nn(face, noonan, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
     # for i in range(len(names_noonan)):
     #     for j in range(i + 1, len(names_noonan)):
