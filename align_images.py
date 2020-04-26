@@ -44,8 +44,8 @@ if __name__ == "__main__":
         for folder_name in os.listdir(RAW_IMAGES_DIR):
             os.makedirs(ALIGNED_IMAGES_DIR + os.sep + folder_name, exist_ok=True)
             print('processing', folder_name)
-                for img_name in os.listdir(RAW_IMAGES_DIR + os.sep + folder_name):
-                    align_file(RAW_IMAGES_DIR + os.sep + folder_name, ALIGNED_IMAGES_DIR + os.sep + folder_name)
+            for img_name in os.listdir(RAW_IMAGES_DIR + os.sep + folder_name):
+                align_file(RAW_IMAGES_DIR + os.sep + folder_name, ALIGNED_IMAGES_DIR + os.sep + folder_name)
     else:
         align_file(RAW_IMAGES_DIR, ALIGNED_IMAGES_DIR)
 
