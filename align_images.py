@@ -20,8 +20,11 @@ def align_file(src, tgt):
         print('processing', img_name)
         raw_img_path = os.path.join(src, img_name)
         face_landmarks = landmarks_detector.get_landmarks(raw_img_path)#[0]
-        aligned_face_path = os.path.join(tgt, img_name)
-        image_align(raw_img_path, aligned_face_path, face_landmarks)
+        if face_landmarks:
+            aligned_face_path = os.path.join(tgt, img_name)
+            image_align(raw_img_path, aligned_face_path, face_landmarks)
+        else:
+            print('Unable to detect...')
 
 if __name__ == "__main__":
     """
