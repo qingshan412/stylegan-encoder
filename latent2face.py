@@ -77,23 +77,23 @@ if __name__ == '__main__':
     generator = Generator(Gs_network, batch_size=1, randomize_noise=False)
     print('generator ready.')
 
-    npy_path = 'data/dist/latent_112_st_1024'
+    npy_path = 'data/dist/latent_112_st_1024_f'
     names = os.listdir(npy_path)
     X_data = np.array([np.load(npy_path + os.sep + name) for name in names])
     names_noonan = [names[i] for i in range(len(names)) if 'noonan' in names[i]]
     X_noonan = [X_data[i] for i in range(len(names)) if 'noonan' in names[i]]
 
-    ffhq_young_path = 'data/ffhq_young'
-    os.makedirs(ffhq_young_path + '/add_nn_256', exist_ok=True)
+    # ffhq_young_path = 'data/ffhq_young'
+    # os.makedirs(ffhq_young_path + '/add_nn_256', exist_ok=True)
 
-    random.seed(888)
-    random_young_faces = random.sample(young_faces, 50)
-    random_X_noonan = random.sample(X_noonan, 10)
-    for i, face in enumerate(random_young_faces):
-        for j, noonan in enumerate(random_X_noonan):
-            sv_path = os.path.join(ffhq_young_path, 'add_nn_256', 
-                names_noonan[j].split('.')[0] + '_' + 'ffhq' + str(i) + '.png')
-            merge_and_save_nn(face, noonan, [0.6, 0.7, 0.8], sv_path)
+    # random.seed(888)
+    # random_young_faces = random.sample(young_faces, 50)
+    # random_X_noonan = random.sample(X_noonan, 10)
+    # for i, face in enumerate(random_young_faces):
+    #     for j, noonan in enumerate(random_X_noonan):
+    #         sv_path = os.path.join(ffhq_young_path, 'add_nn_256', 
+    #             names_noonan[j].split('.')[0] + '_' + 'ffhq' + str(i) + '.png')
+    #         merge_and_save_nn(face, noonan, [0.6, 0.7, 0.8], sv_path)
 
     # os.makedirs(ffhq_young_path + '/orig', exist_ok=True)
     # os.makedirs(ffhq_young_path + '/add_nn', exist_ok=True)
@@ -104,11 +104,11 @@ if __name__ == '__main__':
     #             'orig' + str(i) + '_' + names_noonan[j].split('.')[0] + '.png')
     #         move_and_save_nn(face, noonan, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
-    # for i in range(len(names_noonan)):
-    #     for j in range(i + 1, len(names_noonan)):
-    #         sv_path = ('data/dist/analysis/inter_nn/' + names_noonan[i].split('.')[0] + '_' + 
-    #             names_noonan[j].split('.')[0] + '.png')
-    #         move_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
+    for i in range(len(names_noonan)):
+        for j in range(i + 1, len(names_noonan)):
+            sv_path = ('data/dist/analysis/inter_nn_indiv/' + names_noonan[i].split('.')[0] + '_' + 
+                names_noonan[j].split('.')[0] + '.png')
+            merge_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
