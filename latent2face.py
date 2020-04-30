@@ -108,7 +108,7 @@ if __name__ == '__main__':
         for j in range(i + 1, len(names_noonan)):
             sv_path = ('data/dist/analysis/inter_nn_indiv/' + names_noonan[i].split('.')[0] + '_' + 
                 names_noonan[j].split('.')[0] + '.png')
-            merge_and_save_nn(X_noonan[i], X_noonan[j], [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
+            merge_and_save_nn(X_noonan[i], X_noonan[j], [0.5,], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
