@@ -82,6 +82,8 @@ if __name__ == '__main__':
     X_data = np.array([np.load(npy_path + os.sep + name) for name in names])
     names_noonan = [names[i] for i in range(len(names)) if 'noonan' in names[i]]
     X_noonan = [X_data[i] for i in range(len(names)) if 'noonan' in names[i]]
+    names_normal = [names[i] for i in range(len(names)) if 'normal' in names[i]]
+    X_normal = [X_data[i] for i in range(len(names)) if 'normal' in names[i]]
 
     # ffhq_young_path = 'data/ffhq_young'
     # os.makedirs(ffhq_young_path + '/add_nn_256', exist_ok=True)
@@ -104,11 +106,17 @@ if __name__ == '__main__':
     #             'orig' + str(i) + '_' + names_noonan[j].split('.')[0] + '.png')
     #         move_and_save_nn(face, noonan, [0.0, 0.2, 0.4, 0.6, 0.8, 1.0], sv_path)
 
-    for i in range(len(names_noonan)):
-        for j in range(i + 1, len(names_noonan)):
-            sv_path = ('data/dist/analysis/inter_nn_indiv_05/' + names_noonan[i].split('.')[0] + '_' + 
-                names_noonan[j].split('.')[0] + '.png')
-            merge_and_save_nn(X_noonan[i], X_noonan[j], [0.5,], sv_path)
+    # for i in range(len(names_noonan)):
+    #     for j in range(i + 1, len(names_noonan)):
+    #         sv_path = ('data/dist/analysis/inter_nn_indiv_05/' + names_noonan[i].split('.')[0] + '_' + 
+    #             names_noonan[j].split('.')[0] + '.png')
+    #         merge_and_save_nn(X_noonan[i], X_noonan[j], [0.5,], sv_path)
+
+    for i in range(len(names_normal)):
+        for j in range(i + 1, len(names_normal)):
+            sv_path = ('data/dist/analysis/inter_nm_indiv_05/' + names_normal[i].split('.')[0] + '_' + 
+                names_normal[j].split('.')[0] + '.png')
+            merge_and_save_nn(X_normal[i], X_normal[j], [0.5,], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
