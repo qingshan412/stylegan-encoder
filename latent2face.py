@@ -114,8 +114,8 @@ if __name__ == '__main__':
 
     for i in range(len(names_normal)):
         for j in range(i + 1, len(names_normal)):
-            sv_path = ('data/dist/analysis/inter_nm_indiv_05/' + names_normal[i].split('.')[0] + '_' + 
-                names_normal[j].split('.')[0] + '.png')
+            name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
+            sv_path = ('data/dist/analysis/inter_nm_indiv_05/' + name + '/' + name + '.png')
             merge_and_save_nn(X_normal[i], X_normal[j], [0.5,], sv_path)
 
 # if __name__ == '__main__':
