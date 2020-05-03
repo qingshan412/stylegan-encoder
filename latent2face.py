@@ -63,7 +63,6 @@ if __name__ == '__main__':
 
     directions = {'smile': None} #'gender': None, 'age': None
     for dire in directions.keys():
-        os.makedirs(args.save_dir + os.sep + dire, exist_ok=True)
         directions[dire] = np.load('ffhq_dataset/latent_directions/' + dire + '.npy')
     print('learned representations loaded.')
 
