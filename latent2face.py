@@ -60,6 +60,13 @@ def merge_and_save_nn(left_vector, right_vector, coeffs, path):
 # URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'
 
 if __name__ == '__main__':
+
+    directions = {'smile': None} #'gender': None, 'age': None
+    for dire in directions.keys():
+        os.makedirs(args.save_dir + os.sep + dire, exist_ok=True)
+        directions[dire] = np.load('ffhq_dataset/latent_directions/' + dire + '.npy')
+    print('learned representations loaded.')
+
     tflib.init_tf()
 
     with open('data/latent_training_data.pkl.gz', 'rb') as f:
@@ -112,11 +119,22 @@ if __name__ == '__main__':
     #             names_noonan[j].split('.')[0] + '.png')
     #         merge_and_save_nn(X_noonan[i], X_noonan[j], [0.5,], sv_path)
 
+    for i in range(len(names_noonan)):
+        for j in range(i + 1, len(names_noonan)):
+            name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
+            if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inn05_112/'+name):
+                sv_path = ('data/dist/analysis/interp_nn_s/' + names_noonan[i].split('.')[0] + '_' + 
+                    names_noonan[j].split('.')[0] + '.png')
+                move_and_save_indiv(X_noonan[i]*0.5+X_noonan[j]*0.5, directions['smile'], 
+                                    [0.0, 0.5, 1, 1.5, 2], sv_path)
+
     for i in range(len(names_normal)):
         for j in range(i + 1, len(names_normal)):
             name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
-            sv_path = ('data/dist/analysis/inter_nm_indiv_05/' + name + '/' + name + '.png')
-            merge_and_save_nn(X_normal[i], X_normal[j], [0.5,], sv_path)
+            if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inm05_112/'+name):
+                sv_path = ('data/dist/analysis/interp_nm_s/' + name + '/' + name + '.png')
+                move_and_save_indiv(X_normal[i]*0.5+X_normal[j]*0.5, directions['smile'], 
+                                    [0.0, 0.5, 1, 1.5, 2], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
