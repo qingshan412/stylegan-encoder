@@ -124,8 +124,7 @@ if __name__ == '__main__':
             print(name)
             if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inn05_112/'+name):
                 print(name)
-                sv_path = ('data/dist/analysis/interp_nn_s/' + names_noonan[i].split('.')[0] + '_' + 
-                    names_noonan[j].split('.')[0] + '.png')
+                sv_path = ('data/dist/analysis/interp_nn_s/' + names + '/' + name + '.png')
                 move_and_save_indiv(X_noonan[i]*0.5+X_noonan[j]*0.5, directions['smile'], 
                                     [0.0, 0.5, 1, 1.5, 2], sv_path)
 
