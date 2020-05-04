@@ -120,7 +120,7 @@ if __name__ == '__main__':
 
     for i in range(len(names_noonan)):
         for j in range(i + 1, len(names_noonan)):
-            name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
+            name = names_noonan[i].split('.')[0] + '_' + names_noonan[j].split('.')[0][6:]
             print(name)
             if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inn05_112/'+name):
                 print(name)
