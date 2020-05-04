@@ -122,18 +122,19 @@ if __name__ == '__main__':
         for j in range(i + 1, len(names_noonan)):
             name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
             if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inn05_112/'+name):
+                print(name)
                 sv_path = ('data/dist/analysis/interp_nn_s/' + names_noonan[i].split('.')[0] + '_' + 
                     names_noonan[j].split('.')[0] + '.png')
                 move_and_save_indiv(X_noonan[i]*0.5+X_noonan[j]*0.5, directions['smile'], 
                                     [0.0, 0.5, 1, 1.5, 2], sv_path)
 
-    for i in range(len(names_normal)):
-        for j in range(i + 1, len(names_normal)):
-            name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
-            if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inm05_112/'+name):
-                sv_path = ('data/dist/analysis/interp_nm_s/' + name + '/' + name + '.png')
-                move_and_save_indiv(X_normal[i]*0.5+X_normal[j]*0.5, directions['smile'], 
-                                    [0.0, 0.5, 1, 1.5, 2], sv_path)
+    # for i in range(len(names_normal)):
+    #     for j in range(i + 1, len(names_normal)):
+    #         name = names_normal[i].split('.')[0] + '_' + names_normal[j].split('.')[0][6:]
+    #         if os.path.exists('../InsightFace_Pytorch/data/facebank/stylegan/inm05_112/'+name):
+    #             sv_path = ('data/dist/analysis/interp_nm_s/' + name + '/' + name + '.png')
+    #             move_and_save_indiv(X_normal[i]*0.5+X_normal[j]*0.5, directions['smile'], 
+    #                                 [0.0, 0.5, 1, 1.5, 2], sv_path)
 
 # if __name__ == '__main__':
 #     parser = argparse.ArgumentParser(description='for face transformation')
